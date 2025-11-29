@@ -1,3 +1,5 @@
+//Muhammad Anas
+//25k-0899
 #include <stdio.h>
 // A bank wants to calculate the total repayment amount for a loan using a recursive
 // approach. The loan decreases each year after paying a fixed installment, and interest is applied
