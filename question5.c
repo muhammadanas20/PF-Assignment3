@@ -37,7 +37,6 @@ int main() {
         printf("\n1. Insert Line\n2. Delete Line\n3. Print All\n4. Shrink Memory\n5. Save to File\n6. Load from File\n7. Exit\n");
         printf("Enter choice: ");
         if (scanf("%d", &choice) != 1) {
-            // Clear input buffer if user types non-integer
             while (getchar() != '\n');
             continue;
         }
@@ -125,7 +124,7 @@ void insertLine(TextBuffer *buffer, int index, const char *text) {
         char **newLines = (char **)realloc(buffer->lines, newCapacity * sizeof(char *));
         
         if (newLines == NULL) {
-            perror("Realloc failed during expansion"); // [cite: 95]
+            perror("Realloc failed during expansion"); 
             exit(EXIT_FAILURE);
         }
         
@@ -136,7 +135,7 @@ void insertLine(TextBuffer *buffer, int index, const char *text) {
 
     // 2. Shift pointers to make space (pointer manipulation, not string copying)
     if (index < buffer->count) {
-        // memmove handles overlapping memory regions safely [cite: 89, 98]
+        // memmove handles overlapping memory regions safely 
         memmove(&buffer->lines[index + 1], 
                 &buffer->lines[index], 
                 (buffer->count - index) * sizeof(char *));
@@ -205,7 +204,7 @@ void shrinkToFit(TextBuffer *buffer) {
         
         buffer->lines = newLines;
         buffer->capacity = buffer->count;
-        printf("Debug: Memory shrunk to fit %d lines.\n", buffer->capacity); // 
+        printf("Debug: Memory shrunk to fit %d lines.\n", buffer->capacity); 
     } else {
         printf("Debug: Buffer is already optimal size.\n");
     }
@@ -215,7 +214,7 @@ void shrinkToFit(TextBuffer *buffer) {
 void saveToFile(const TextBuffer *buffer, const char *filename) {
     FILE *fp = fopen(filename, "w");
     if (fp == NULL) {
-        perror("Error opening file for writing"); // [cite: 156]
+        perror("Error opening file for writing"); 
         return;
     }
 
@@ -247,7 +246,7 @@ void loadFromFile(TextBuffer *buffer, const char *filename) {
         tempBuffer[strcspn(tempBuffer, "\n")] = 0;
         
         // Insert at the end (append)
-        insertLine(buffer, buffer->count, tempBuffer); // [cite: 93]
+        insertLine(buffer, buffer->count, tempBuffer); 
     }
 
     fclose(fp);

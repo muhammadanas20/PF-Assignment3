@@ -4,7 +4,7 @@
 
 #define FILE_NAME "members.dat"
 
-// --- Struct Definitions 
+// Struct Definitions 
 typedef struct {
     int year, month, day;
 } Date;
@@ -19,11 +19,11 @@ struct Student {
     char interest[20];          // IEEE/ACM/Both
 };
 
-// --- Global Variables (In-Memory Database) ---
+// Global Variables 
 struct Student *studentArray = NULL;
 int studentCount = 0;
 
-// --- Function Prototypes ---
+// Function Prototypes 
 void loadDatabase(const char *filename);
 void saveDatabase(const char *filename);
 void addStudent();
@@ -33,11 +33,11 @@ void printData();
 void batchReport();
 void freeMemory();
 
-// --- Main Function [cite:
+//  Main Function
 int main() {
     int choice, tempID;
 
-    // 1. Load existing data on startup [cite: 117]
+    // 1. Load existing data on startup
     loadDatabase(FILE_NAME);
 
     while(1) {
@@ -54,7 +54,7 @@ int main() {
             while(getchar() != '\n'); // Flush input buffer
             continue;
         }
-        while(getchar() != '\n'); // Consume newline after scanf
+        while(getchar() != '\n'); 
 
         switch(choice) {
             case 1:
@@ -77,8 +77,7 @@ int main() {
                 batchReport();
                 break;
             case 6:
-                // Data is saved automatically after modifications, 
-                // but we can save again to be safe.
+                
                 saveDatabase(FILE_NAME); 
                 freeMemory();
                 printf("Exiting program. Goodbye!\n");
@@ -90,9 +89,8 @@ int main() {
     return 0;
 }
 
-// --- Implementation: File Operations ---
 
-// Load data from binary file into Dynamic Array [cite: 132]
+// Load data from binary file into Dynamic Array 
 void loadDatabase(const char *filename) {
     FILE *fp = fopen(filename, "rb");
     if (fp == NULL) {
@@ -117,9 +115,9 @@ void loadDatabase(const char *filename) {
     printf("[Success] Loaded %d records from %s.\n", studentCount, filename);
 }
 
-// Save entire Dynamic Array to binary file [cite: 133]
+// Save entire Dynamic Array to binary file 
 void saveDatabase(const char *filename) {
-    FILE *fp = fopen(filename, "wb"); // 'wb' overwrites file with current RAM state
+    FILE *fp = fopen(filename, "wb"); // 'wb'
     if (fp == NULL) {
         printf("[Error] Could not open file for writing.\n");
         return;
@@ -131,9 +129,8 @@ void saveDatabase(const char *filename) {
     printf("[Success] Database saved to file.\n");
 }
 
-// --- Implementation: Core Features ---
 
-// Register New Student [cite: 134, 144]
+// Register New Student 
 void addStudent() {
     struct Student s;
     
@@ -142,7 +139,7 @@ void addStudent() {
     scanf("%d", &s.ID);
     while(getchar() != '\n'); // Flush buffer
 
-    // Check ID Uniqueness [cite: 119]
+    // Check ID Uniqueness 
     for(int i=0; i<studentCount; i++) {
         if(studentArray[i].ID == s.ID) {
             printf("[Error] Student ID %d already exists!\n", s.ID);
@@ -180,11 +177,11 @@ void addStudent() {
     studentArray[studentCount] = s;
     studentCount++;
 
-    // Save to file immediately [cite: 118]
+    // Save to file immediately
     saveDatabase(FILE_NAME); 
 }
 
-// Update Student Info [cite: 135, 145]
+// Update Student Info
 void updateStudent(int studentID) {
     int foundIndex = -1;
     for (int i = 0; i < studentCount; i++) {
@@ -220,10 +217,10 @@ void updateStudent(int studentID) {
     }
 
     printf("[Success] Record updated.\n");
-    saveDatabase(FILE_NAME); // Persist changes
+    saveDatabase(FILE_NAME);
 }
 
-// Delete Student [cite: 136, 146]
+// Delete Student 
 void deleteStudent(int studentID) {
     int foundIndex = -1;
     for (int i = 0; i < studentCount; i++) {
@@ -245,7 +242,7 @@ void deleteStudent(int studentID) {
 
     studentCount--;
     
-    // Optional: Shrink memory (good practice for Q5/Q6 concepts)
+   
     if (studentCount > 0) {
         struct Student *tempPtr = realloc(studentArray, studentCount * sizeof(struct Student));
         if (tempPtr != NULL) {
@@ -257,10 +254,10 @@ void deleteStudent(int studentID) {
     }
 
     printf("[Success] Student deleted.\n");
-    saveDatabase(FILE_NAME); // Persist changes (rewrite file) 
+    saveDatabase(FILE_NAME); 
 }
 
-// Display All [cite: 147]
+// Display All 
 void printData() {
     if (studentCount == 0) {
         printf("\nNo records found.\n");
@@ -280,7 +277,7 @@ void printData() {
     }
 }
 
-// Batch-wise Report [c
+// Batch-wise Report 
 void batchReport() {
     char filterBatch[100];
     while(getchar() != '\n'); // clear buffer just in case
@@ -293,7 +290,6 @@ void batchReport() {
     
     int found = 0;
     for (int i = 0; i < studentCount; i++) {
-        // Case sensitive comparison as per C standard, use strcasecmp if platform allows
         if (strcmp(studentArray[i].batch, filterBatch) == 0) {
             printf("%-5d %-20s %-10s\n", 
                 studentArray[i].ID, 

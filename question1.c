@@ -37,6 +37,6 @@ float principal = 100000;
     
     calculateRepayment(principal,rate,extraPayment,installment,1,duration);
     return 0;
-    //recurnsion is perfectly apply on this problem as they are calculating same for year 1 and year 2 
+    //recursion is perfectly apply on this problem as they are calculating same for year 1 and year 2 
     //and there is also a base case for this to stop 
 }

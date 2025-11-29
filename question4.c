@@ -63,13 +63,13 @@ void add(struct Shelf s[], int capacity, int *count, int id, int score) {
     } 
     // Case 3: New Book, Shelf IS FULL
     else {
-        // Shift everyone to the right (overwriting the last element)
+        // Shift everyone to the right
         for (int i = capacity - 1; i > 0; i--) {
             s[i] = s[i-1];
         }
     }
 
-    // Insert new book at the front (Most Recently Used position)
+    // Insert new book at the front 
     s[0].ID = id;
     s[0].popularityScore = score;
 }
@@ -78,7 +78,7 @@ void access(struct Shelf s[], int count, int id) {
     for (int i = 0; i < count; i++) {
         if (s[i].ID == id) {
             printf("%d\n", s[i].popularityScore);
-            moveToFront(s, i); // Important: Move accessed book to front
+            moveToFront(s, i); 
             return;
         }
     }
